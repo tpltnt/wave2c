@@ -1,4 +1,6 @@
 wave2c
 ======
 
-a simple converter to dump Wave audio into a C-array
+what: a simple converter to dump wave audio into a C-array
+why: sometimes you need it + testing Go
+status: unfinished
