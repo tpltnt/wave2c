@@ -37,7 +37,7 @@ func Test_AreEqualSlices_unequal(t *testing.T) {
 
 // known good test 11k
 func Test_IsWavefileHeaderOk_11k(t *testing.T) {
-     wavefile, err := os.Open("11k16bitpcm.wav")
+     wavefile, err := os.Open("testdata/11k16bitpcm.wav")
      // if error -> panic
      if err != nil { panic(err) }
      // close file when main returns
@@ -49,7 +49,7 @@ func Test_IsWavefileHeaderOk_11k(t *testing.T) {
 
 // known good
 func Test_IsWavefileHeaderOk_8bit(t *testing.T) {
-     wavefile, err := os.Open("validinput.wav")
+     wavefile, err := os.Open("testdata/validinput.wav")
      // if error -> panic
      if err != nil { panic(err) }
      // close file when main returns
@@ -61,7 +61,7 @@ func Test_IsWavefileHeaderOk_8bit(t *testing.T) {
 
 // open random data
 func Test_IsWavefileHeaderOk_rnddata(t *testing.T) {
-     wavefile, err := os.Open("rnddata.wav")
+     wavefile, err := os.Open("testdata/rnddata.wav")
      // if error -> panic
      if err != nil { panic(err) }
      // close file when main returns
@@ -72,7 +72,7 @@ func Test_IsWavefileHeaderOk_rnddata(t *testing.T) {
 
 // known good
 func Test_IsWavefileHeaderOk(t *testing.T) {
-     wavefile, err := os.Open("validinput.wav")
+     wavefile, err := os.Open("testdata/validinput.wav")
      // if error -> panic
      if err != nil { panic(err) }
      // close file when main returns
