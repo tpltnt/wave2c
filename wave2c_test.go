@@ -1,3 +1,7 @@
+/* Tests for a small utility to convert RIFF wave audio files into C-arrays.
+ * written in 2013 by tpltnt
+ * license: MIT
+ */
 package main
 
 import(
