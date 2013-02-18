@@ -18,3 +18,5 @@ FAQ
 ---
 * How can i convert an arbitary audio file so wave2c can eat it?
   Just use sox. Here is a commandline: sox INPUTFILE.wav --bits 8 --channels 1 --encoding unsigned-integer --rate 8k OUTPUT.wav
+* How do i test the program?
+  Simply run: go test
