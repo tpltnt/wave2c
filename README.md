@@ -12,12 +12,12 @@ file has to be an 8bit mono wavefile with a samplerate of 8KHz (for now).
 
 usage
 -----
-* simply run: ```wave2c inputfile.wav```
+* simply run: ```wave2c INPUTFILE.wav```
 
 FAQ
 ---
 * How can i convert an arbitary audio file so wave2c can eat it?
-  Just use [SoX](http://sox.sourceforge.net/). Here is a commandline: ```sox INPUTFILE.wav --bits 8 --channels 1 --encoding unsigned-integer --rate 8k OUTPUT.wav```
+  Just use [SoX](http://sox.sourceforge.net/). Here is a commandline: ```sox INPUTFILE.wav --bits 8 --channels 1 --encoding unsigned-integer --rate 8k OUTPUTFILE.wav```
 
 * How do i test the program?
   Simply run: ```go test```
