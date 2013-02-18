@@ -5,9 +5,9 @@ status: unfinished
 
 about
 -----
-wave2c a simple converter to dump wave audio into a C-array. This can be used
-to make audio recordings part of a microconroller firmware. To do so the audio
-file has to be an 8bit mono wavefile with a samplerate of 8KHz (for now).
+wave2c a simple converter to dump [wave audio](http://en.wikipedia.org/wiki/WAV) into a C-array. This can be used to make audio recordings part of a
+microconroller firmware. To do so the audio file has to be an 8bit mono
+wavefile with a samplerate of 8KHz (for now).
 
 
 usage
