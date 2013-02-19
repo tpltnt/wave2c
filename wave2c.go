@@ -249,15 +249,26 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      if err != nil { panic(err) }
      headerwriter := bufio.NewWriter(headerfile)
      // write array length (fourbytes -> 32bits unsigned)
-     headerwriter.WriteString("const long pcm_length=")
-     headerwriter.WriteString(Bytes2Uint32(fourbytes))
+     writestring := "const long pcm_length="
+     byteswritten, err := headerwriter.WriteString(writestring)
+     if err != nil { panic(err) }
+     if len(writestring) != byteswritten {
+     	log.Println("error writing bytes to C-header file")
+	return false
+     }
+     headerwriter.WriteString(string(Bytes2Uint32(fourbytes)))
      headerwriter.WriteString(";\n")
      headerwriter.WriteString("const unsigned char pcm_samples[] PROGMEM ={")
 
      databyte := make([]byte,1)
      bytesread, err = reader.Read(databyte)
-
+     if err != nil { panic(err) }
+     if 1 != bytesread {
+     	log.Println("couldn't read data byte")
+	return false
+     }
      for err != io.EOF {
+     	 headerwriter.WriteString("")
          // convert number string to integer
          //currentInt, err = strconv.Atoi(numberstring)
          //if err != nil { log.Fatal(err) }
