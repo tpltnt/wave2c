@@ -17,7 +17,7 @@ usage
 FAQ
 ---
 * How do i build it?
-  As long as you have go and GNU make installed, simply type ```make```
+  As long as you have [go](http://golang.org/) and [GNU make](http://www.gnu.org/software/make/) installed, simply type ```make```
 
 * How can i convert an arbitary audio file so wave2c can eat it?
   Just use [SoX](http://sox.sourceforge.net/). Here is a commandline: ```sox INPUTFILE.wav --bits 8 --channels 1 --encoding unsigned-integer --rate 8k OUTPUTFILE.wav```
