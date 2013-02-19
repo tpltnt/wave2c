@@ -256,9 +256,28 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("error writing bytes to C-header file")
 	return false
      }
-     headerwriter.WriteString(string(Bytes2Uint32(fourbytes)))
-     headerwriter.WriteString(";\n")
-     headerwriter.WriteString("const unsigned char pcm_samples[] PROGMEM ={")
+     writestring = string(Bytes2Uint32(fourbytes))
+     byteswritten, err = headerwriter.WriteString(writestring)
+     if err != nil { panic(err) }
+     if len(writestring) != byteswritten {
+        log.Println("error writing bytes to C-header file")
+        return false
+     }
+     writestring = ";\n"
+     byteswritten, err = headerwriter.WriteString(writestring)
+     if err != nil { panic(err) }
+     if len(writestring) != byteswritten {
+        log.Println("error writing bytes to C-header file")
+        return false
+     }
+     writestring = "const unsigned char pcm_samples[] PROGMEM ={"
+     byteswritten, err = headerwriter.WriteString(writestring)
+     if err != nil { panic(err) }
+     if len(writestring) != byteswritten {
+        log.Println("error writing bytes to C-header file")
+        return false
+     }
+
 
      databyte := make([]byte,1)
      bytesread, err = reader.Read(databyte)
