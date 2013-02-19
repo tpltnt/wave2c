@@ -241,15 +241,17 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
         log.Println("not enough bytes read for data chunk size")
         return false
      }
-     // fourbytes = length of datachunk in bytes (32bit unsigned -> 4 byte)
+
      //-- write file
      // C-header foo
      headerfile, err := os.Create(filename)
      defer headerfile.Close()
      if err != nil { panic(err) }
      headerwriter := bufio.NewWriter(headerfile)
+     // write array length (fourbytes -> 32bits unsigned)
      headerwriter.WriteString("const long pcm_length=")
-     headerwriter.WriteString("6800;\n")
+     headerwriter.WriteString(Bytes2Uint32(fourbytes))
+     headerwriter.WriteString(";\n")
      headerwriter.WriteString("const unsigned char pcm_samples[] PROGMEM ={")
 
      databyte := make([]byte,1)
