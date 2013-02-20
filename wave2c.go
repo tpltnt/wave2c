@@ -283,23 +283,24 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      bytesread, err = reader.Read(databyte)
      if err != nil { panic(err) }
      if 1 != bytesread {
-     	log.Println("couldn't read data byte")
+     	log.Println("couldn't read sample data byte")
 	return false
      }
+     // TODO: take number of samples into account
      for err != io.EOF {
      	 // write data
      	 writestring = string(databyte)
      	 headerwriter.WriteString(writestring)
 	 if err != nil { panic(err) }
     	 if len(writestring) != byteswritten {
-            log.Println("error writing bytes to C-header file")
+            log.Println("error writing sample bytes to C-header file")
             return false
      	 }
 	 // read data for writing
 	 bytesread, err = reader.Read(databyte)
 	 if (err != nil) && (err != io.EOF) { panic(err) }
      	 if 1 != bytesread {
-            log.Println("couldn't read data byte")
+            log.Println("couldn't read sample data byte")
             return false
      	 }
 
