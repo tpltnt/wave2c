@@ -287,6 +287,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	return false
      }
      for err != io.EOF {
+     	 // write data
      	 writestring = string(databyte)
      	 headerwriter.WriteString(writestring)
 	 if err != nil { panic(err) }
@@ -294,6 +295,14 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
             log.Println("error writing bytes to C-header file")
             return false
      	 }
+	 // read data for writing
+	 bytesread, err = reader.Read(databyte)
+	 if (err != nil) && (err != io.EOF) { panic(err) }
+     	 if 1 != bytesread {
+            log.Println("couldn't read data byte")
+            return false
+     	 }
+
      }
      return true
 }
