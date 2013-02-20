@@ -286,6 +286,9 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("couldn't read sample data byte")
 	return false
      }
+     // create 8x8 blocks of samples
+     samplebyte := 0	  // samples per line
+     blockcounter := 0	  // sample lines per block
      // TODO: take number of samples into account
      for err != io.EOF {
      	 // write data
@@ -296,6 +299,25 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
             log.Println("error writing sample bytes to C-header file")
             return false
      	 }
+	 // make break after 8 samples are written
+	 samplebyte = samplebyte + 1
+	 if 8 == samplebyte {
+	    writestring = ",\n"
+	    samplebyte = 0
+	    blockcounter = blockcounter + 1
+	    if 8 == blockcounter {
+	       writestring = ",\n\n"
+	       blockcounter = 0
+	    }
+	 } else {
+	    writestring = ", "
+	 }
+         headerwriter.WriteString(writestring)
+         if err != nil { panic(err) }
+         if len(writestring) != byteswritten {
+            log.Println("error writing sample bytes to C-header file")
+            return false
+         }
 	 // read data for writing
 	 bytesread, err = reader.Read(databyte)
 	 if (err != nil) && (err != io.EOF) { panic(err) }
@@ -303,7 +325,14 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
             log.Println("couldn't read sample data byte")
             return false
      	 }
-
+     }
+     // close structure
+     writestring = "\n};\n"
+     headerwriter.WriteString(writestring)
+     if err != nil { panic(err) }
+     if len(writestring) != byteswritten {
+     	log.Println("error writing closing structure to C-header file")
+        return false
      }
      return true
 }
