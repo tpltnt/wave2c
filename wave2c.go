@@ -270,6 +270,9 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
         log.Println("error writing bytes to C-header file")
         return false
      }
+     // actually write data to disk
+     if err = headerwriter.Flush(); err != nil { panic(err) }
+     // write data array
      writestring = "const unsigned char pcm_samples[] PROGMEM ={"
      byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
@@ -278,6 +281,9 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
         return false
      }
 
+     return false
+
+//----
 
      databyte := make([]byte,1)
      bytesread, err = reader.Read(databyte)
@@ -334,6 +340,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("error writing closing structure to C-header file")
         return false
      }
+
      return true
 }
 
@@ -355,4 +362,5 @@ func main() {
         fmt.Print("not ")
      }
      fmt.Println("ok.")
+     ConvertData(reader,"test.c")
 }
