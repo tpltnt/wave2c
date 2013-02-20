@@ -281,10 +281,6 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
         return false
      }
 
-     return false
-
-//----
-
      databyte := make([]byte,1)
      bytesread, err = reader.Read(databyte)
      if err != nil { panic(err) }
@@ -340,6 +336,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("error writing closing structure to C-header file")
         return false
      }
+     if err = headerwriter.Flush(); err != nil { panic(err) }
 
      return true
 }

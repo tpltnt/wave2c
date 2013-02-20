@@ -2,6 +2,9 @@ wave2c
 ======
 
 status: unfinished
+todo:
+* flushing array data to disk
+* write tests
 
 about
 -----
