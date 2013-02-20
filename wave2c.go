@@ -287,14 +287,13 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	return false
      }
      for err != io.EOF {
-     	 headerwriter.WriteString("")
-         // convert number string to integer
-         //currentInt, err = strconv.Atoi(numberstring)
-         //if err != nil { log.Fatal(err) }
-         // append to dataslice
-         //dataslice = append(dataslice, currentInt)
-         //line, err = reader.ReadString('\n')
-         //numberstring = strings.TrimSpace(line)
+     	 writestring = string(databyte)
+     	 headerwriter.WriteString(writestring)
+	 if err != nil { panic(err) }
+    	 if len(writestring) != byteswritten {
+            log.Println("error writing bytes to C-header file")
+            return false
+     	 }
      }
      return true
 }
