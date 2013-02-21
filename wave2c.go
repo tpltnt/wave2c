@@ -247,7 +247,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      headerfile, err := os.Create(filename)
      defer headerfile.Close()
      if err != nil { panic(err) }
-     headerwriter := bufio.NewWriter(headerfile)
+     headerwriter := bufio.NewWriterSize(headerfile,4096)
      // write array length (fourbytes -> 32bits unsigned)
      writestring := "const long pcm_length="
      byteswritten, err := headerwriter.WriteString(writestring)
@@ -296,7 +296,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      for err != io.EOF {
      	 // write data
      	 writestring = string(databyte)
-     	 headerwriter.WriteString(writestring)
+     	 byteswritten, err = headerwriter.WriteString(writestring)
 	 if err != nil { panic(err) }
     	 if len(writestring) != byteswritten {
             log.Println("error writing sample bytes to C-header file")
@@ -312,12 +312,12 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	    if 8 == blockcounter {
 	       writestring = ",\n\n"
 	       blockcounter = 0
+	       if err = headerwriter.Flush(); err != nil { panic(err) }
 	    }
 	 } else {
 	    writestring = ", "
 	 }
-	 if err = headerwriter.Flush(); err != nil { panic(err) }
-         headerwriter.WriteString(writestring)
+         byteswritten, err = headerwriter.WriteString(writestring)
          if err != nil { panic(err) }
          if len(writestring) != byteswritten {
             log.Println("error writing sample bytes to C-header file")
@@ -333,7 +333,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      }
      // close structure
      writestring = "\n};\n"
-     headerwriter.WriteString(writestring)
+     byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
      if len(writestring) != byteswritten {
      	log.Println("error writing closing structure to C-header file")
