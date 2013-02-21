@@ -280,6 +280,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
         log.Println("error writing bytes to C-header file")
         return false
      }
+     if err = headerwriter.Flush(); err != nil { panic(err) }
 
      databyte := make([]byte,1)
      bytesread, err = reader.Read(databyte)
@@ -301,6 +302,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
             log.Println("error writing sample bytes to C-header file")
             return false
      	 }
+	 if err = headerwriter.Flush(); err != nil { panic(err) }
 	 // make break after 8 samples are written
 	 samplebyte = samplebyte + 1
 	 if 8 == samplebyte {
@@ -310,11 +312,11 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	    if 8 == blockcounter {
 	       writestring = ",\n\n"
 	       blockcounter = 0
-	       if err = headerwriter.Flush(); err != nil { panic(err) } // flush block
 	    }
 	 } else {
 	    writestring = ", "
 	 }
+	 if err = headerwriter.Flush(); err != nil { panic(err) }
          headerwriter.WriteString(writestring)
          if err != nil { panic(err) }
          if len(writestring) != byteswritten {

@@ -4,7 +4,7 @@ test:
 	go test
 
 valid: main
-	./wave2c validinput.wav
+	./wave2c testdata/validinput.wav
 
 .PHONY: clean
 clean:
