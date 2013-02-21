@@ -310,6 +310,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	    if 8 == blockcounter {
 	       writestring = ",\n\n"
 	       blockcounter = 0
+	       if err = headerwriter.Flush(); err != nil { panic(err) } // flush block
 	    }
 	 } else {
 	    writestring = ", "
