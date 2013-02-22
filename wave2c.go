@@ -256,7 +256,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("error writing bytes to C-header file")
 	return false
      }
-     writestring = string(Bytes2Uint32(fourbytes))
+     writestring = fmt.Sprintf("%u",Bytes2Uint32(fourbytes))
      byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
      if len(writestring) != byteswritten {
