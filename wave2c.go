@@ -294,7 +294,6 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      blockcounter := 0	  // sample lines per block
      // TODO: take number of samples into account
      for err != io.EOF {
-     	 fmt.Println("in loop")
      	 // write data
      	 writestring = string(databyte)
      	 byteswritten, err = headerwriter.WriteString(writestring)
