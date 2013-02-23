@@ -273,7 +273,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      // actually write data to disk
      if err = headerwriter.Flush(); err != nil { panic(err) }
      // write data array
-     writestring = "const unsigned char pcm_samples[] PROGMEM ={"
+     writestring = "const unsigned char pcm_samples[] PROGMEM = {"
      byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
      if len(writestring) != byteswritten {
@@ -295,7 +295,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      // TODO: take number of samples into account
      for err != io.EOF {
      	 // write data
-     	 writestring = string(databyte)
+     	 writestring = fmt.Sprintf("%d",databyte[0])
      	 byteswritten, err = headerwriter.WriteString(writestring)
 	 if err != nil { panic(err) }
     	 if len(writestring) != byteswritten {
