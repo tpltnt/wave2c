@@ -249,7 +249,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      if err != nil { panic(err) }
      headerwriter := bufio.NewWriterSize(headerfile,4096)
      // write array length (fourbytes -> 32bits unsigned)
-     writestring := "const long pcm_length="
+     writestring := "const long pcm_length = "
      byteswritten, err := headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
      if len(writestring) != byteswritten {
