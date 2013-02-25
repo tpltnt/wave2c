@@ -256,7 +256,8 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      	log.Println("error writing bytes to C-header file")
 	return false
      }
-     writestring = fmt.Sprintf("%d",Bytes2Uint32(fourbytes))
+     samplebytesstring := fmt.Sprintf("%d",Bytes2Uint32(fourbytes))
+     writestring = samplebytesstring
      byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
      if len(writestring) != byteswritten {
@@ -293,7 +294,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      samplebyte := 0	  // samples per line
      blockcounter := 0	  // sample lines per block
      // TODO: take number of samples into account
-     for err != io.EOF {
+     for samplecounter := 0; err != io.EOF; samplecounter++ {
      	 // write data
      	 writestring = fmt.Sprintf("%d",databyte[0])
      	 byteswritten, err = headerwriter.WriteString(writestring)
