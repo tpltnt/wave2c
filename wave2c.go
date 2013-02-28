@@ -13,6 +13,7 @@ import(
 	"io"
 	"log"
 	"os"
+	"strconv"
 )
 
 // check slices for equality
@@ -257,6 +258,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	return false
      }
      samplebytesstring := fmt.Sprintf("%d",Bytes2Uint32(fourbytes))
+
      writestring = samplebytesstring
      byteswritten, err = headerwriter.WriteString(writestring)
      if err != nil { panic(err) }
@@ -273,6 +275,8 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      }
      // actually write data to disk
      if err = headerwriter.Flush(); err != nil { panic(err) }
+
+
      // write data array
      writestring = "const unsigned char pcm_samples[] PROGMEM = {\n    "
      byteswritten, err = headerwriter.WriteString(writestring)
@@ -293,8 +297,14 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      // create 8x8 blocks of samples
      samplebyte := 0	  // samples per line
      blockcounter := 0	  // sample lines per block
+     samplebytes, err := strconv.ParseInt(samplebytesstring,10,32)
+     if err != nil {
+     	log.Println("byte conversion failed")
+	return false
+     }
      // TODO: take number of samples into account
-     for samplecounter := 0; err != io.EOF; samplecounter++ {
+     var samplecounter int64
+     for samplecounter = 0; (samplecounter <= samplebytes) || (err != io.EOF); samplecounter++ {
      	 // write data
      	 writestring = fmt.Sprintf("%d",databyte[0])
      	 byteswritten, err = headerwriter.WriteString(writestring)
