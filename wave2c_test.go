@@ -134,3 +134,13 @@ func Test_Bytes2uint32_ok_ff00ff00(t *testing.T) {
         t.Error("invalid byte conversation")
      }
 }
+
+func Test_ConvertData_ok(t *testing.T) {
+     wavefile, err := os.Open("testdata/validinput.wav")
+     if err != nil { t.Error("opening test vae file failed") }
+     defer wavefile.Close()
+     reader := bufio.NewReader(wavefile)
+     if !IsWavefileHeaderOk(reader) { t.Error("file header b0rked") }
+     if !IsWavefileFormatOk(reader) { t.Error("file format not ok") }
+     if !ConvertData(reader,"/dev/null") { t.Error("converting data failed") }
+}
