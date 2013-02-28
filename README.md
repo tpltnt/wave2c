@@ -1,12 +1,7 @@
 wave2c
 ======
 
-status: unfinished
-
-todo:
-
-* fix read/write loop
-* write tests
+status: finished (it works)
 
 about
 -----
