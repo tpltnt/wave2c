@@ -304,7 +304,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      }
      // TODO: take number of samples into account
      var samplecounter int64
-     for samplecounter = 1; (samplecounter < samplebytes) || (err != io.EOF); samplecounter++ {
+     for samplecounter = 1; samplecounter < samplebytes; samplecounter++ {
      	 // write data
      	 writestring = fmt.Sprintf("%d",databyte[0])
      	 byteswritten, err = headerwriter.WriteString(writestring)
