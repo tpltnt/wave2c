@@ -304,7 +304,7 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
      }
      // TODO: take number of samples into account
      var samplecounter int64
-     for samplecounter = 0; (samplecounter <= samplebytes) || (err != io.EOF); samplecounter++ {
+     for samplecounter = 1; (samplecounter < samplebytes) || (err != io.EOF); samplecounter++ {
      	 // write data
      	 writestring = fmt.Sprintf("%d",databyte[0])
      	 byteswritten, err = headerwriter.WriteString(writestring)
@@ -338,7 +338,8 @@ func ConvertData(reader *bufio.Reader, filename string) bool {
 	 bytesread, err = reader.Read(databyte)
 	 if (err != nil) && (err != io.EOF) { panic(err) }
      	 if 1 != bytesread {
-            log.Println("couldn't read sample data byte")
+	    log.Println(bytesread)
+            log.Println("couldn't read sample data byte [", samplecounter, "]")
             return false
      	 }
      }
